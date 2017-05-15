@@ -1,3 +1,6 @@
 rest_platform_homepage:
     path:     /
     defaults: { _controller: restPlatformBundle:Default:index }
+article_show:
+    path:     /articles/{id}
+    defaults: { _controller: restPlatformBundle:Article:show }
