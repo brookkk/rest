@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+
 use rest\PlatformBundle\Entity\Article;
 
 
@@ -19,16 +20,14 @@ class ArticleController extends Controller
 
  
 
-
-    public function showAction()
+/**
+     * @Route("/articles/{id}", name="article_show")
+     * @Method({"GET"})
+     */
+    public function showAction(Article $article)
     {
 
- 	$article=new Article();
 
-    	$article
-    		->setTitle('My first Art')
-    		->setContent('My first articles content')
-    		;
 
     	$data=$this->get('jms_serializer')->serialize($article, 'json');
 
@@ -55,4 +54,30 @@ class ArticleController extends Controller
 
         return new Response('', Response::HTTP_CREATED);
     }
+
+/**
+	     * @Route("/articles", name="listeArticles")
+     * @Method({"GET"})
+     */
+
+	public function listeArticlesAction($value='')
+    {
+    	
+
+
+    	$listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
+
+
+
+	$data=$this->get('jms_serializer')->serialize($listeArticles, 'json');
+
+    	$response=new Response($data);
+    	$response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+
+
+    }
+
 }
