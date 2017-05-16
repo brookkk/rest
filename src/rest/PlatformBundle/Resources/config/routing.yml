@@ -4,3 +4,6 @@ rest_platform_homepage:
 article_show:
     path:     /articles/{id}
     defaults: { _controller: restPlatformBundle:Article:show }
+article_create:
+    path:     /articles/
+    defaults: { _controller: restPlatformBundle:Article:create }

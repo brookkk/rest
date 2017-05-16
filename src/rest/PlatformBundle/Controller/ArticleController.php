@@ -2,6 +2,10 @@
 
 namespace rest\PlatformBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,12 +39,15 @@ class ArticleController extends Controller
     }
 
 
-
+/**
+     * @Route("/articles", name="article_create")
+     * @Method({"POST"})
+     */
 
     public function createAction(Request $request)
     {
         $data = $request->getContent();
-        $article = $this->get('jms_serializer')->deserialize($data, 'PlatformBundle\Entity\Article', 'json');
+        $article = $this->get('jms_serializer')->deserialize($data, 'rest\PlatformBundle\Entity\Article', 'json');
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($article);
