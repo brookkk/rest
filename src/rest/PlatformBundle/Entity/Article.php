@@ -3,12 +3,15 @@
 namespace rest\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * Article
  *
  * @ORM\Table(name="article")
  * @ORM\Entity(repositoryClass="rest\PlatformBundle\Repository\ArticleRepository")
+ * @Serializer\ExclusionPolicy("ALL")
  */
 class Article
 {
@@ -25,6 +28,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Serializer\Expose
      */
     private $title;
 
@@ -32,6 +36,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Serializer\Expose
      */
     private $content;
 

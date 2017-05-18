@@ -1,0 +1,3 @@
+rest_user_homepage:
+    path:     /
+    defaults: { _controller: restUserBundle:Default:index }

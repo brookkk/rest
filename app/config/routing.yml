@@ -1,3 +1,7 @@
+rest_user:
+    resource: "@restUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 rest_platform:
     resource: "@restPlatformBundle/Resources/config/routing.yml"
     prefix:   /
