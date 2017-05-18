@@ -1,3 +1,6 @@
 rest_user_homepage:
     path:     /
     defaults: { _controller: restUserBundle:Default:index }
+chat_page:
+    path:     /chat
+    defaults: { _controller: restUserBundle:Chat:chat }
