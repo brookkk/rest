@@ -30,8 +30,11 @@ class ArticleController extends Controller
      *     path = "/articles/{id}",
      *     name = "article_show",
      *     requirements = {"id"="\d+"}
+     *     
      * )
-     * @View
+     * @View(
+        * statusCode = 200
+        * )
      */
     public function showAction(Article $article)
     {
