@@ -2,6 +2,9 @@
 
 namespace rest\PlatformBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\View;
+
 use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -20,21 +23,29 @@ class ArticleController extends Controller
 
  
 
-/**
-     * @Route("/articles/{id}", name="article_show")
-     * @Method({"GET"})
+ 
+
+ /**
+     * @Get(
+     *     path = "/articles/{id}",
+     *     name = "article_show",
+     *     requirements = {"id"="\d+"}
+     * )
+     * @View
      */
     public function showAction(Article $article)
     {
 
 
-
+/*
     	$data=$this->get('jms_serializer')->serialize($article, 'json');
 
     	$response=new Response($data);
     	$response->headers->set('Content-Type', 'application/json');
 
-        return $response;
+        return $response;*/
+
+        return $article;
     }
 
 
@@ -60,22 +71,39 @@ class ArticleController extends Controller
      * @Method({"GET"})
      */
 
-	public function listeArticlesAction($value='')
+/**
+     * @Get(
+     *     path = "/articles",
+     *     name = "articles_show",
+     * )
+     * @View
+     */
+
+	public function listeArticlesAction()
     {
     	
 
-
-    	$listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
-
+ /*      // THE OLD WAY / SERIALIZOR AND STUFF
 
 
-	$data=$this->get('jms_serializer')->serialize($listeArticles, 'json');
+   $listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
 
-    	$response=new Response($data);
-    	$response->headers->set('Content-Type', 'application/json');
+
+    $data=$this->get('jms_serializer')->serialize($listeArticles, 'json');
+
+        $response=new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+*/
 
+
+        // the better way : using FosRestBundle
+
+    $listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
+
+
+     return $listeArticles;
 
 
     }
