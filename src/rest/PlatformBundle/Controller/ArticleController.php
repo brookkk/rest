@@ -4,6 +4,7 @@ namespace rest\PlatformBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,6 +16,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 
 use rest\PlatformBundle\Entity\Article;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 
@@ -52,13 +56,21 @@ class ArticleController extends Controller
     }
 
 
-/**
-     * @Route("/articles", name="article_create")
-     * @Method({"POST"})
+
+
+ /**
+     * @Rest\Post(
+     *    path = "/articles",
+     *    name = "article_create"
+     * )
+     * @Rest\View(StatusCode = 201)
+     * @ParamConverter("article", converter="fos_rest.request_body")
      */
 
-    public function createAction(Request $request)
+    public function createAction(Article $article)
     {
+       
+/*
         $data = $request->getContent();
         $article = $this->get('jms_serializer')->deserialize($data, 'rest\PlatformBundle\Entity\Article', 'json');
 
@@ -67,12 +79,24 @@ class ArticleController extends Controller
         $em->flush();
 
         return new Response('', Response::HTTP_CREATED);
+
+        */
+
+
+
+         $em = $this->getDoctrine()->getManager();
+
+        $em->persist($article);
+        $em->flush();
+
+        //return $this->view($article, Response::HTTP_CREATED, ['Location' => $this->generateUrl('article_create', ['id' => $article->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
+
+        return $article;
+
+
     }
 
-/**
-	     * @Route("/articles", name="listeArticles")
-     * @Method({"GET"})
-     */
+ 
 
 /**
      * @Get(
