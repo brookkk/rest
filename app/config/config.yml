@@ -72,6 +72,10 @@ swiftmailer:
     spool: { type: memory }
 
 fos_rest:
+    exception:
+        enabled: true
+        codes:
+            {rest\PlatformBundle\Exception\ResourceValidationException: 400 }
     body_converter:
         enabled: true
         validate: true

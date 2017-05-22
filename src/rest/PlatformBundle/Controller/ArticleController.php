@@ -23,6 +23,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 
+use rest\PlatformBundle\Exception\ResourceValidationException;
+
 
 
 class ArticleController extends Controller
@@ -75,6 +77,11 @@ class ArticleController extends Controller
 
  if (count($violations)) {
             return $this->view($violations, Response::HTTP_BAD_REQUEST);
+            $message = 'The JSON sent contains invalid data. Here are the errors you need to correct: ';
+            foreach ($violations as $violation) {
+                $message .= sprintf("Field %s: %s ", $violation->getPropertyPath(), $violation->getMessage());
+            }
+            throw new ResourceValidationException($message);
         }
 
          $em = $this->getDoctrine()->getManager();
