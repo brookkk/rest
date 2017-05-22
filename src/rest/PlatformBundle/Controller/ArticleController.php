@@ -76,8 +76,8 @@ class ArticleController extends Controller
         }*/
 
  if (count($violations)) {
-            return $this->view($violations, Response::HTTP_BAD_REQUEST);
-            $message = 'The JSON sent contains invalid data. Here are the errors you need to correct: ';
+            //return $this->view($violations, Response::HTTP_BAD_REQUEST);
+            $message = 'The JSON sent contains invalid data: ';
             foreach ($violations as $violation) {
                 $message .= sprintf("Field %s: %s ", $violation->getPropertyPath(), $violation->getMessage());
             }

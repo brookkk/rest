@@ -49,6 +49,7 @@ class Article
 
   /**
      * @ORM\ManyToOne(targetEntity="Author", cascade={"all"}, fetch="EAGER")
+     * @Assert\NotBlank
      */
     private $author;
 
