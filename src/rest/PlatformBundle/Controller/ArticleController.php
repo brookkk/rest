@@ -140,7 +140,7 @@ class ArticleController extends Controller
     
     // with pager	
 
-    $pager = $this->getDoctrine()->getRepository('restPlatformBundle:Article')->search(
+/*    $pager = $this->getDoctrine()->getRepository('restPlatformBundle:Article')->search(
             $paramFetcher->get('keyword'),
             $paramFetcher->get('order'),
             $paramFetcher->get('limit'),
@@ -149,18 +149,18 @@ class ArticleController extends Controller
 
         return $pager->getCurrentPageResults();
 
-
+*/
 
 
  
 
 
         // the better way : using FosRestBundle
-/*  $listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
+  $listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
 
 
      return $listeArticles;
-*/
+
 
     }
 

@@ -26,6 +26,7 @@ class ArticleRepository extends AbstractRepository
             ;
         }
         
+        
         return $this->paginate($qb, $limit, $offset);
     }
 
