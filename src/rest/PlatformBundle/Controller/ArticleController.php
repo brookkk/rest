@@ -45,15 +45,7 @@ class ArticleController extends Controller
     public function showAction(Article $article)
     {
 
-
-/*
-    	$data=$this->get('jms_serializer')->serialize($article, 'json');
-
-    	$response=new Response($data);
-    	$response->headers->set('Content-Type', 'application/json');
-
-        return $response;*/
-
+        //amazingly easy :3
         return $article;
     }
 
@@ -72,19 +64,6 @@ class ArticleController extends Controller
     public function createAction(Article $article)
     {
        
-/*
-        $data = $request->getContent();
-        $article = $this->get('jms_serializer')->deserialize($data, 'rest\PlatformBundle\Entity\Article', 'json');
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($article);
-        $em->flush();
-
-        return new Response('', Response::HTTP_CREATED);
-
-        */
-
-
 
          $em = $this->getDoctrine()->getManager();
 
