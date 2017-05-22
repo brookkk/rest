@@ -20,6 +20,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use FOS\RestBundle\Request\ParamFetcherInterface;
+
 
 
 class ArticleController extends Controller
@@ -98,40 +100,67 @@ class ArticleController extends Controller
 
  
 
-/**
-     * @Get(
-     *     path = "/articles",
-     *     name = "articles_show",
+
+
+
+
+    /**
+     * @Rest\Get("/articles", name="articles_show")
+     * @Rest\QueryParam(
+     *     name="keyword",
+     *     requirements="[a-zA-Z0-9]",
+     *     nullable=true,
+     *     default="title",
+     *     description="The keyword to search for."
+    * )
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
      * )
-     * @View
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of movies per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="0",
+     *     description="The pagination offset"
+     * )
+     * @Rest\View()
      */
 
-	public function listeArticlesAction()
+
+	public function listeArticlesAction(ParamFetcherInterface $paramFetcher)
     {
-    	
+    
+    // with pager	
 
- /*      // THE OLD WAY / SERIALIZOR AND STUFF
+    $pager = $this->getDoctrine()->getRepository('restPlatformBundle:Article')->search(
+            $paramFetcher->get('keyword'),
+            $paramFetcher->get('order'),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
+        );
+
+        return $pager->getCurrentPageResults();
 
 
-   $listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
 
 
-    $data=$this->get('jms_serializer')->serialize($listeArticles, 'json');
-
-        $response=new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-*/
+ 
 
 
         // the better way : using FosRestBundle
-
-    $listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
+/*  $listeArticles = $this  ->getDoctrine()   ->getRepository('restPlatformBundle:Article')->findAll();
 
 
      return $listeArticles;
-
+*/
 
     }
 
