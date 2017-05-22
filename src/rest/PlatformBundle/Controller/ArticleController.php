@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 
 
@@ -61,16 +62,26 @@ class ArticleController extends Controller
      * @ParamConverter("article", converter="fos_rest.request_body")
      */
 
-    public function createAction(Article $article)
+    public function createAction(Article $article, ConstraintViolationList $violations)
     {
        
+
+
+      /*  $errors = $this->get('validator')->validate($article);
+
+        if (count($errors)) {
+            return $this->view($errors, Response::HTTP_BAD_REQUEST);
+        }*/
+
+ if (count($violations)) {
+            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+        }
 
          $em = $this->getDoctrine()->getManager();
 
         $em->persist($article);
         $em->flush();
 
-        //return $this->view($article, Response::HTTP_CREATED, ['Location' => $this->generateUrl('article_create', ['id' => $article->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
 
         return $article;
 
